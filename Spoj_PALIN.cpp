@@ -387,7 +387,7 @@ void union_set(ll a, ll b, vector<ll> &par, vector<ll> &sz)
 
 int main()
 {
-    // tourist soln
+
     ISO();
     online_judge();
     ll tt;
@@ -398,10 +398,85 @@ int main()
 
     while (tt--)
     {
+        string k;
+        cin >> k;
+        string k2 = k;
+        ll i, j;
+        i = 0;
+        j = k.length() - 1;
+        bool flag = 0;
+        bool flag2 = 1;
+        while (i <= j)
+        {
 
-        ll n;
-        cin >> n;
-        cout << n <<"\n";
+            if (k2[i] >= k2[j])
+            {
+                k2[j] = k2[i];
+            }
+            else
+            {
+                flag2 = 0;
+                break;
+            }
+
+            i++;
+            j--;
+        }
+        if(flag2 && k2 != k){
+            cout << k2 <<"\n";
+            continue;
+        }
+        i = (k.length() - 1) / 2;
+        j = (k.length()) / 2;
+
+        while (i >= 0 && j < k.length())
+        {
+            if (flag)
+            {
+                k[j] = k[i];
+            }
+            else
+            {
+                if (k[i] == k[j])
+                {
+                    if (k[i] == '9' && !flag)
+                    {
+                        k[i] = '0';
+                        k[j] = '0';
+                    }
+                    else
+                    {
+                        k[i] = (k[i] + 1);
+                        k[j] = k[i];
+                        flag = 1;
+                    }
+                }
+                else
+                {
+                    for (char z = min(k[i], k[j]) + 1; z <= max(k[i], k[j]); ++z)
+                    {
+                        if (z >= k[i])
+                        {
+                            k[i] = z;
+                            k[j] = k[i];
+                            break;
+                        }
+                    }
+                    flag = 1;
+                }
+            }
+            // cerr << flag << " " << k[i] << " " << k[j] << " " << i << " " << j << "\n";
+            i--;
+            j++;
+        }
+
+        if (!flag)
+        {
+            k[k.length() - 1] = '1';
+            cout << '1' << k << "\n";
+        }
+        else
+            cout << k << "\n";
     }
     cerr << "Time elapsed: " << clock() / 1000 << " ms" << endl;
     return 0;
