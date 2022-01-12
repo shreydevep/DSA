@@ -1,5 +1,3 @@
-#pragma GCC optimize("Ofast")
-#pragma GCC target("avx,avx2,fma")
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -9,7 +7,7 @@ using namespace std;
 #define MAXN 10000001
 #define PI 3.141592653589793238462
 
-#define ll long long
+#define ll long longs
 #define pb push_back
 #define mkp make_pair
 #define pll pair<ll, ll>
@@ -30,10 +28,10 @@ using namespace std;
 #define forab(i, a, b, c) for (ll(i) = a; (i) <= (b); (i) += (c))
 
 #ifndef ONLINE_JUDGE
-#define debug(x)       \
-    cerr << #x << " "; \
-    _print(x);         \
-    cerr << "\n";
+#define debug(x)
+cerr << x << " ";
+_print(x);
+cerr << "\n";
 #else
 #define debug(x)
 #endif
@@ -120,7 +118,7 @@ void Seive()
     seive.resize(maxn);
     forn(i, maxn) seive[i] = i;
     forab(i, 2, maxn, 2)
-        seive[i] = 2;
+    seive[i] = 2;
     seive[1] = -1;
     seive[0] = -1;
     for (ll i = 3; i <= maxn; i += 2)
@@ -159,7 +157,7 @@ ll find_x_CRT(ll num[], ll rem[], ll n)
 {
     ll pro = 1;
     forn(i, n)
-        pro *= num[i];
+    pro *= num[i];
     ll res = 0;
     forn(i, n)
     {
@@ -284,7 +282,7 @@ void updateRange(ll node, ll start, ll end, ll l, ll r, ll val)
         lazy[node] = 0; // Reset it
     }
     if ((start > end) || (start > r) || (end < l))
-    { // Current segment is not within range [l, r]
+    {   // Current segment is not within range [l, r]
         return;
     }
 
@@ -325,7 +323,7 @@ ll queryRange(ll node, ll start, ll end, ll l, ll r)
         lazy[node] = 0; // Reset it
     }
     if ((start >= l) && (end <= r))
-    { // Current segment is totally within range [l, r]
+    {   // Current segment is totally within range [l, r]
         return st[node];
     }
     ll mid = (start + end) / 2;
@@ -422,8 +420,8 @@ int main()
             i++;
             j--;
         }
-        if(flag2 && k2 != k){
-            cout << k2 <<"\n";
+        if (flag2 && k2 != k) {
+            cout << k2 << "\n";
             continue;
         }
         i = (k.length() - 1) / 2;
