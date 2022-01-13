@@ -44,38 +44,52 @@ void ISO()
     // For Factorial uncomment Fact array!!!
     // Check Sieve upper bound
 }
+ll dp[505][505];
+void memo() {
+    for (ll i = 0; i < 505; ++i) {
+        for (ll j = 0; j<505; ++j) {
+            dp[i][j] = -1;
+        }
+    }
+}
+ll n;
+ll recurr(ll i, ll k, vector<ll> &a, vector<ll> &d) {
+    if (i == n) {
+        return 0;
+    }
+    if (dp[i][k] != -1) return dp[i][k];
+    ll temp = inf;
+    for (ll j = i + 1; j < n + 1; ++j) {
+        if (k - (j - i - 1) >= 0) {
+            ll cst = (d[j] - d[i]) * a[i];
+            temp = min(temp, cst + recurr(j, k - (j - i - 1),a,d));
+        }
+    }
+    return dp[i][k] = temp;
+}
 
 int main() {
 
     ISO();
     online_judge();
     ll t;
-    cin >> t;
+    t = 1;
+    // cin >> t;
     while (t--) {
-        ll n;
-        cin >> n;
+        ll l, k;
+        cin >> n >> l >> k;
         vector <ll> a(n);
+        vector <ll> d(n);
+        for (ll i = 0; i < n; ++i) {
+            cin >> d[i];
+        }
+        d.push_back(l);
         for (ll i = 0; i < n; ++i) {
             cin >> a[i];
         }
-        ll ans = -1;
-        vector <vector<ll>> f(2e5, vector<ll>());
-
-        for (ll i = 0; i < n; ++i) {
-            f[a[i]].push_back(i);
-        }
-        for (auto x : f) {
-            sort(x.begin(), x.end());
-            if (x.size() > 0)
-                for (ll i = 0; i < x.size() - 1; ++i) {
-                    ll j = i + 1;
-                    ll x1 = x[i];
-                    ll x2 = x[j];
-                    ll len = x1 + (n - x2 - 1) + 1;
-                    ans = max(ans, len);
-                }
-        }
-        cout << ans << "\n";
+        a.push_back(0);
+        memo();
+        cout << recurr(0,k,a,d) <<"\n";
 
     }
 
@@ -90,4 +104,3 @@ int main() {
 
 
 
-    
