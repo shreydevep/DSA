@@ -72,7 +72,7 @@ int main() {
         r--;
         c--;
         int black = 0;
-        vector<vector<char>> grid(n, vector<char>(m));
+        vector<vector<char> > grid(n, vector<char>(m));
         for (ll i = 0; i < n; ++i) {
             for (ll j = 0; j < m; ++j) {
                 cin >> grid[i][j];
