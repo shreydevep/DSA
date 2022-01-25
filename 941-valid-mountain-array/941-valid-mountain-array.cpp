@@ -3,27 +3,16 @@ public:
     bool validMountainArray(vector<int>& arr) {
         if(arr.size() < 3) return false;
         
-        int mx = INT_MIN;
         int pos = 0;
-        for(int i=1;i<arr.size()-1;++i){
-            if(mx < arr[i]){
-                pos = i;
-                mx = arr[i];
-            }
+        while(pos+1 < arr.size() && arr[pos] <arr[pos+1]){
+            pos++;
         }
+        if(pos == 0 || pos == arr.size()-1) return false;
         
-        for(int i=0;i<arr.size();++i){
-            if(i < pos){
-                if(arr[i] >= mx || arr[i] >= arr[i+1]) return false;
-            }   
-            else if(i == pos){
-                continue;
-            }
-            else{
-                if(arr[i] >= mx || arr[i-1] <= arr[i]) return false;
-            }
+        while(pos+1 < arr.size() && arr[pos] > arr[pos+1]){
+            pos++;
         }
-        return true;
+        return (pos == arr.size()-1);
         
     }
 };
