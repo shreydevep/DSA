@@ -8,8 +8,9 @@ public:
             hash[temp].push_back(x);
         }
         vector<vector<string>> res;
+         res.reserve(hash.size());
         for(auto x : hash){
-            res.push_back(x.second);
+            res.push_back(std::move(x.second));
         }
         return res;
         
