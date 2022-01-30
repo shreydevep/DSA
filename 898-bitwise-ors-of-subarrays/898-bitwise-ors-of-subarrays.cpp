@@ -1,19 +1,14 @@
 class Solution {
 public:
     int subarrayBitwiseORs(vector<int>& A) {
-        unordered_set<int> s;
-        set<int> t;
-        for (int i : A) {
-            set<int> r;
-            r.insert(i);
-            //cout << i <<"**\n";
-            for (int j : t) {
-               // cout << i <<" "<< j <<" "<< (int)(i | j) <<"\n";
-                r.insert(i | j);
-                }
-            t = r;
-            for (int j : t) s.insert(j);
+        unordered_set<int> res, cur, cur2;
+        for (int i: A) {
+            cur2 = {i};
+            for (int j: cur) cur2.insert(i|j);
+            for (int j: cur2) res.insert(j);
+            cur = cur2;
+            cur2.clear();
         }
-        return s.size();
+        return res.size();
     }
 };
