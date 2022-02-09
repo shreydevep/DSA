@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<pair<char,int>> compress(string s){
+    vector<pair<char,int>> compress(string &s){
         vector<pair<char,int>> res;
         int curr = 0;
         int i = 0;
