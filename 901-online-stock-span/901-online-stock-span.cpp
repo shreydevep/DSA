@@ -1,8 +1,8 @@
-static int sz = 0;
+
 class StockSpanner {
 public:
     stack <pair<int,int>> left;
-    
+    int sz;
     StockSpanner() {
         sz = 0;
         left.push({10001,0});
