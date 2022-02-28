@@ -1,6 +1,7 @@
 class WordDictionary {
 public:
-    struct Node{
+    class Node{
+        public:
         Node* links[26] = {NULL};
         bool flag = false;
         
@@ -25,6 +26,9 @@ public:
     Node* root;
     WordDictionary() {
         root = new Node;    
+    }
+    ~WordDictionary(){
+        delete root;
     }
     
     void addWord(string word) {
