@@ -23,7 +23,6 @@ public:
                 
                 
                 void setEnd(string word){
-                    flag = true;
                     str = word;
                 }
                 
@@ -32,7 +31,7 @@ public:
                 }
             };
             Node* root;
-            set <string> ans;
+            vector <string> ans;
             Trie(){
                 root = new Node();
             }
@@ -52,9 +51,11 @@ public:
                 
             }
             void search(Node* curr,Node* nword){   
-                if(curr->str != "" && nword->str != ""){
+                if(curr->str != "" && nword->str != "" && !curr->flag){
                     //Add to Hash Map
-                    ans.insert(curr->str);
+                    ans.push_back(curr->str);
+                    curr->flag = true;
+                    
                 }
                 
                 if(nword->str != ""){
