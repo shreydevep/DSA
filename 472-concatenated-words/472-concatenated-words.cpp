@@ -58,7 +58,7 @@ public:
                     
                 }
                 
-                if(nword->str != "" && !curr->flag){
+                if(nword->str != ""){
                     search(curr,root);
                 }
                 
