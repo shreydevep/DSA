@@ -1,16 +1,27 @@
-typedef pair<double,pair<int,int>> pr;
+typedef pair<int,int> pr;
 class Solution {
 public:
+    class Compare
+    {
+        public:
+        bool operator() (const pr &p1, const pr &p2)
+        {
+            if(p1.first*p2.second > p1.second*p2.first){
+                return 1;
+            }
+            return 0;
+        }
+    };
    
     vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k) {
-        priority_queue<pr,vector<pr>,greater<pr>> pq;
+        priority_queue<pr,vector<pr>, Compare> pq;
         for(int i=0;i<arr.size();++i)
             for(int j=i+1;j<arr.size();++j)
-                pq.push({(double)arr[i]/arr[j],{arr[i],arr[j]}});
+                pq.push({arr[i],arr[j]});
             
         while(--k)
             pq.pop();
-        return vector<int>{pq.top().second.first,pq.top().second.second};
+        return vector<int>{pq.top().first,pq.top().second};
         
     }
 };
