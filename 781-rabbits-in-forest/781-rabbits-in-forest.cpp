@@ -1,7 +1,7 @@
 class Solution {
 public:
     int numRabbits(vector<int>& answers) {
-        map<int,int> mp;
+        unordered_map<int,int> mp;
         int ans = 0;
         for(auto rabbit : answers){
             mp[rabbit]++;
