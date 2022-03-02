@@ -12,7 +12,7 @@ class Solution{
   public:
     vector<vector<string> > Anagrams(vector<string>& string_list) {
         //code here
-        map<string,vector<string>> hash;
+        unordered_map<string,vector<string>> hash;
         
         for(auto s : string_list){
             string temp = s;
