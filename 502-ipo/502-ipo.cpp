@@ -9,7 +9,7 @@ public:
         }
         sort(cp.begin(),cp.end());
         int pos = 0;
-        while(pos < cp.size() && cp[pos].first <= w){
+        while(pos < cp.size() and cp[pos].first <= w){
             hash.push(cp[pos].second);
             pos++;
         }
