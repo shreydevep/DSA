@@ -10,7 +10,7 @@ class Solution{
     int lenOfLongSubarr(int A[],  int N, int k) 
     { 
         // Complete the function
-        map<int,vector<int>> freq;
+        map<int,int> freq;
         
         int prefix[N+1];
         prefix[0] = 0;
@@ -23,15 +23,16 @@ class Solution{
             int req = prefix[i] - k;
             
             if(freq.find(req) != freq.end()){
-                for(auto pos : freq[req]){
+                    auto pos = freq[req];
                     ans = max(ans,abs(i-pos));
-                }
+                
             }
             if(req == 0){
                 ans = max(ans,i);
             }
-            
-            freq[prefix[i]].push_back(i);
+            if(freq.find(prefix[i]) != freq.end())
+                freq[prefix[i]] = min(freq[prefix[i]],i);
+            else freq[prefix[i]] = i;
             
         }
         return ans;
