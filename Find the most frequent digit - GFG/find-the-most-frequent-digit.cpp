@@ -21,19 +21,16 @@ int main()
 
 int solve(string N)
 {
-   unordered_map<int,int> mp;
-   for(int i=0;i<N.size();i++){
-        mp[N[i]-'0']++;
+    vector<int> freq(10,0);
+    for(auto ch : N){
+        freq[ch-'0']++;
     }
-    int element=-1;
-    int max=-10;
-    for(int i=9;i>=0;i--){
-        if(mp[i]>max && mp[i]>=1){
-            max=mp[i];
-            element=i;
-        }
+    int curr = 0;
+    
+    for(int i=0;i<=9;++i){
+        if(freq[curr] <= freq[i]) curr = i;
     }
-    return element;
+    return curr;
     
     
 }
