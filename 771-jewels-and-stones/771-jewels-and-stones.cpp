@@ -1,7 +1,7 @@
 class Solution {
 public:
     int numJewelsInStones(string jewels, string stones) {
-        unordered_set<char> mp;
+        set<char> mp;
         for(auto x : jewels){
             mp.insert(x);
         }
