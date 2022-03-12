@@ -3,10 +3,13 @@ public:
     int numSquares(int n) {
         vector<int> dp(n+1);
         vector<int> prefectSqures;
-        
-        for(int i=1;i<=n;++i){
-            prefectSqures.push_back(i*i);
+        int len = sqrt(n) + 1;
+        for(int i=0;i<=n;++i){
             dp[i] = i;
+        }
+         for(int i=1;i<=len;++i){
+            prefectSqures.push_back(i*i);
+            
         }
         for(int i=2;i<=n;++i){
             for(auto x : prefectSqures){
