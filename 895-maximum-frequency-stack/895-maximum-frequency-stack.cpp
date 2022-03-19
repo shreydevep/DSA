@@ -16,7 +16,7 @@ public:
         }
     };
     priority_queue<pii,vector<pii>,Compare> pq;
-    map<int,int> mp;
+    unordered_map<int,int> mp;
     FreqStack() {
         
         clk = 0;
