@@ -36,7 +36,7 @@ public:
         return dp[i][validUpto] = min({ans1,ans2,ans3});
     }
     int mincostTickets(vector<int>& days, vector<int>& costs) {
-        vector<vector<int>> dp(400,vector<int>(400,-1));
+        vector<vector<int>> dp(days.size()+1,vector<int>(400,-1));
            return recurr(0,0,days,costs,dp);
     }
 };
