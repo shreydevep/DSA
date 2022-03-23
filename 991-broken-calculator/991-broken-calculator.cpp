@@ -9,10 +9,9 @@ public:
            else target /= 2;
             op++;
         }
-        
-        while(startValue > target){
-            target++;
-            op++;
+        int diff = (startValue - target);
+        if(diff > 0){
+            op += diff;
         }
         
         
