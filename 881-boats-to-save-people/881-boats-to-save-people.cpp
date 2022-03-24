@@ -11,7 +11,7 @@ public:
                 boats++;
                 i++;
                 j--;
-                
+                continue;
             }
             else{
                 j--;
