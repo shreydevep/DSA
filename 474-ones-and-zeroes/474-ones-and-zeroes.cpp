@@ -9,8 +9,8 @@ public:
         }
         return {zeros,ones};
     }
-    int dp[601][101][101] = {0};
-    int recurr(int i,int m,int n,vector<string> &strs){
+    
+    int recurr(int i,int m,int n,vector<string> &strs,vector<vector<vector<int>>> &dp){
         if(i == strs.size()){
             return 0;
         }
@@ -19,21 +19,15 @@ public:
         }
         auto p = countOnesNzeros(strs[i]);
         if(p.first <= m && p.second <= n){
-            return dp[i][m][n] = max(recurr(i+1,m-p.first,n-p.second,strs)+1,recurr(i+1,m,n,strs));
+            return dp[i][m][n] = max(recurr(i+1,m-p.first,n-p.second,strs,dp)+1,recurr(i+1,m,n,strs,dp));
         }
         else{
-            return dp[i][m][n] = recurr(i+1,m,n,strs);
+            return dp[i][m][n] = recurr(i+1,m,n,strs,dp);
         }
         
     }
     int findMaxForm(vector<string>& strs, int m, int n) {
-        for(int i=0;i<601;++i){
-            for(int j=0;j<101;++j){
-                for(int k=0;k<101;++k){
-                    dp[i][j][k] = -1;
-                }
-            }
-        }
-        return recurr(0,m,n,strs);
+        vector<vector<vector<int>>> dp(strs.size(),vector<vector<int>>(m+1,vector<int>(n+1,-1)));
+        return recurr(0,m,n,strs,dp);
     }
 };
