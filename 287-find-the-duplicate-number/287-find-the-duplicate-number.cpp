@@ -1,13 +1,24 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        for(auto &x : nums){
-            if(nums[abs(x)] < 0){
-                return abs(x);
-            }
-            nums[abs(x)] *= -1;
+    
+        int slow = nums[0];
+        int fast = nums[0];
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[nums[fast]];
         }
-       
-        return -1;
+        
+        slow = nums[0];
+        while(slow != fast){
+            fast = nums[fast];
+            slow = nums[slow];
+        }
+        
+        return fast;
+        
+        
     }
 };
