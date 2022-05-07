@@ -1,19 +1,21 @@
 class Solution {
 public:
     vector<int> findClosestElements(vector<int>& arr, int k, int x) {
-        priority_queue<pair<int,int>> pq;
-        for(auto &z : arr){
-            pq.push({abs(x-z),z});
-            if(pq.size() > k){
-                pq.pop();
+        //So we need to get the window of size k such that the abs difference 
+        //of elements is equal to k
+        int L = 0;
+        int R = arr.size() - 1;
+        while(R-L >= k){
+            if(L >= 0 && R < arr.size() && abs(arr[L] - x) < abs(arr[R] - x)){
+                R--;
+            }
+            else if((abs(arr[L] - x) == abs(arr[R] - x) && arr[L] < arr[R])){
+                R--;
+            }
+            else{
+                L++;
             }
         }
-        vector<int> result;
-        while(!pq.empty()){
-            result.push_back(pq.top().second);
-            pq.pop();
-        }
-        sort(result.begin(),result.end());
-        return result;
+        return vector<int> (begin(arr) + L, begin(arr) + R + 1);
     }
 };
