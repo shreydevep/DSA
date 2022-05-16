@@ -1,27 +1,23 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
-    void recurr(int index,vector<int> &res,vector <int> &candidates,int target){
-         if(target == 0){
-            ans.push_back(res);
-             return;
+   vector<vector<int>> results;
+    void recurr(int i,int target,vector<int> &candidates,vector<int> posCad){
+        if(target == 0) {
+                reverse(posCad.begin(),posCad.end());
+                results.push_back(posCad);
+                return;
         }
-        if(target < 0 || index == candidates.size()){
-            return;
-        }
-        for(int cnt=0;cnt<=(target/candidates[index]);++cnt){
-            for(int k=1;k<=cnt;++k){
-                res.push_back(candidates[index]);
-            }
-            recurr(index+1,res,candidates,target-(cnt*candidates[index]));
-             for(int k=1;k<=cnt;++k){
-                res.pop_back();
-            }
-        }
+        if(target < 0 or i < 0) return;
+        
+        
+        posCad.push_back(candidates[i]);
+        recurr(i,target-candidates[i],candidates,posCad);
+        posCad.pop_back();
+        recurr(i-1,target,candidates,posCad);
     }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<int> res;   
-        recurr(0,res,candidates,target);
-        return ans;
+        vector<int> posCad;
+        recurr(candidates.size()-1,target,candidates,posCad);
+        return results;
     }
 };
