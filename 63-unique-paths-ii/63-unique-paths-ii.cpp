@@ -4,7 +4,7 @@ public:
     vector <int> dy = {0,1};
     int dp[101][101];
     int ways(int i,int j,int m,int n,vector<vector<int>>& obstacleGrid){
-        //cout << dp[i][j] <<" "<<i <<" "<< j <<"\n";
+        
         if(i== m-1 && j == n-1 && obstacleGrid[i][j]) return 0;
         if(i == m-1 && j == n-1) return 1;
         if(dp[i][j] != -1) return dp[i][j];
