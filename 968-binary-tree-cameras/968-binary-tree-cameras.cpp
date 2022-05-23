@@ -11,6 +11,18 @@
  */
 class Solution {
 public:
+    /**
+    *There will be 3 States for any node as:
+    * Have a Camera -> returns 0
+    * Need Camera -> returns -1
+    * Covered by any of the child -> returns 1
+    *
+    * Now if -1 value is returned then immediately assisgn a camera
+    * both left and right child returns 1, then the node returns -1 
+    * as it is in immediate need of camera
+    *
+    * if 0 is returned then node is covered and it further returns 1
+    **/
     int ans = 0;
     int postorder(TreeNode* node){
         if(node == NULL) return 1;
