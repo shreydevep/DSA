@@ -17,6 +17,7 @@ public:
         int forwardSlope = -1;
         int backwardSlope = -1;
         int maxLen = 0;
+        ~Mypair();
     };
     int ans = 0;
     Mypair* dfs(TreeNode* root){
