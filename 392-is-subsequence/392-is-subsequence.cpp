@@ -1,19 +1,23 @@
 class Solution {
 public:
-    bool recurr(int i,int j,string &s,string &t){
-        if(i == s.length() && j <= t.length()) return true;
+    bool isSubsequence(unordered_map<char,vector<int>> &mp,string t){
+        int req = 0;
         
-        if(j >= t.length()) return false;
-        
-        
-        if(s[i] == t[j]){
-            return recurr(i+1,j+1,s,t);
+        for(int i=0;i<t.length();++i){
+            auto itr = lower_bound(mp[t[i]].begin(),mp[t[i]].end(),req);
+            if(itr == mp[t[i]].end()) return false;
+            
+            req = *itr+1;
         }
-        else{
-            return recurr(i,j+1,s,t);
-        }
+        
+        return true;
     }
-    bool isSubsequence(string s, string t) {
-        return recurr(0,0,s,t);
+  
+    bool isSubsequence(string t, string s) {
+         unordered_map<char,vector<int>> mp;
+        for(int i=0;i<s.length();++i){
+            mp[s[i]].push_back(i);
+        }
+        return isSubsequence(mp,t);
     }
 };
