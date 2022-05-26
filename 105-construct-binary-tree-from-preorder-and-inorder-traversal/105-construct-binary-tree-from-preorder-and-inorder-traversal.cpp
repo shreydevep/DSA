@@ -13,7 +13,7 @@ class Solution {
 public:
     int rt;
     unordered_map<int,int> mp;
-    TreeNode* buildTreeFromPreorder(int i,int j,vector<int>& preorder,vector<int> &inorder){
+    TreeNode* buildTreeFromPreorder(int i,int j,vector<int>& preorder){
         
         if(j < i) return NULL;
         
@@ -22,8 +22,8 @@ public:
         TreeNode* root = new TreeNode();
         root->val = preorder[rt];
         rt++;
-        root->left = buildTreeFromPreorder(i,k-1,preorder,inorder);
-        root->right = buildTreeFromPreorder(k+1,j,preorder,inorder);
+        root->left = buildTreeFromPreorder(i,k-1,preorder);
+        root->right = buildTreeFromPreorder(k+1,j,preorder);
         
         
         return root;
@@ -34,7 +34,7 @@ public:
             mp[inorder[i]] = i;
         }
         
-        TreeNode *head = buildTreeFromPreorder(0,inorder.size()-1,preorder,inorder);
+        TreeNode *head = buildTreeFromPreorder(0,inorder.size()-1,preorder);
         return head;
     }
 };
