@@ -12,38 +12,29 @@
 class Solution {
 public:
     int rt;
-    TreeNode* buildTreeFromPreorder(vector<int>& preorder,vector<int> &inorder){
+    unordered_map<int,int> mp;
+    TreeNode* buildTreeFromPreorder(int i,int j,vector<int>& preorder,vector<int> &inorder){
         
-        if(inorder.size() == 0) return NULL;
+        if(j < i) return NULL;
         
-        vector<int> leftSubTree;
-        vector<int> rightSubTree;
-        bool flag = 0;
+        int k = mp[preorder[rt]];
         
-        for(int j = 0;j<inorder.size();++j){
-            if(inorder[j] == preorder[rt]){
-                flag = 1;
-                continue;
-            }
-            if(!flag){
-                leftSubTree.push_back(inorder[j]);
-            }
-            else{
-                rightSubTree.push_back(inorder[j]);
-            }
-        }
         TreeNode* root = new TreeNode();
         root->val = preorder[rt];
         rt++;
-        root->left = buildTreeFromPreorder(preorder,leftSubTree);
-        root->right = buildTreeFromPreorder(preorder,rightSubTree);
+        root->left = buildTreeFromPreorder(i,k-1,preorder,inorder);
+        root->right = buildTreeFromPreorder(k+1,j,preorder,inorder);
         
         
         return root;
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         rt = 0;
-        TreeNode *head = buildTreeFromPreorder(preorder,inorder);
+        for(int i=0;i<inorder.size();++i){
+            mp[inorder[i]] = i;
+        }
+        
+        TreeNode *head = buildTreeFromPreorder(0,inorder.size()-1,preorder,inorder);
         return head;
     }
 };
