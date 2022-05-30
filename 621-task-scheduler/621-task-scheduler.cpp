@@ -9,7 +9,7 @@ public:
             freq[task]++;
         }
         priority_queue<pair<int,char>> pq;
-        map<int,pair<int,char>> reschedule;
+        unordered_map<int,pair<int,char>> reschedule;
         for(auto &x : freq){
             pq.push({x.second,x.first});
         }
@@ -21,7 +21,7 @@ public:
                 pq.push(reschedule[timer]);
             }
             if(pq.empty() && reschedule.find(timer) == reschedule.end()){
-                auto itr = reschedule.lower_bound(timer);
+                
                 timer++;
                 continue;
             }
