@@ -1,8 +1,6 @@
 class Solution {
 public:
     vector<int> dp;
-    bool flag = false;
-    bool ans;
     bool dfs(int curr,int hash,int &desiredTotal,int &maxBit){
         //cout << curr <<" "<< chance <<"\n";
         
