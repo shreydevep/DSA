@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<string> ans;
     unordered_set<string> st;
-    bool nowCheck(string ip){
+    bool nowCheck(string &ip){
         stringstream ss(ip);
         vector<string> v;
         while (ss.good()) {
@@ -31,7 +31,7 @@ public:
         
         return 1;
     }
-    bool check(vector<int> pos,string s){
+    bool check(vector<int> pos,string &s){
         if(pos.size() != 3) return 0;
         reverse(pos.begin(),pos.end());
         string temp;
@@ -42,30 +42,35 @@ public:
                 pos.pop_back();
             }
         }
+        //cout << temp <<"\n";
         int cnt = 0;
         for(auto &x : temp){
             if(x == '.') cnt++;
         }
         if(cnt != 3) return 0;
         
-        return nowCheck(temp);
+       return nowCheck(temp);
     }
-    void recurr(int i,int remNum,vector<int> pos,string &s){
-        if(remNum == 0){
-            //Check;
-            check(pos,s);
-            return;
-        }
-        for(int j=i;j<s.length()-1;++j){
-            pos.push_back(j);
-            recurr(j,remNum-1,pos,s);
-            pos.pop_back();
+    void recurr(string &s){
+        int n = s.length();
+        for(int i=0;i<n-3;i++){//i ke left me
+            for(int j=i+1;j<n-2;j++){//j ke left me
+                for(int k=i+2;k<n-1;k++){// k ke left me
+                    
+                    vector<int> pos;
+                    pos.push_back(i);
+                    pos.push_back(j);
+                    pos.push_back(k);
+                    check(pos,s);
+                    pos.clear();
+                }
+            }
         }
         
     }
     vector<string> restoreIpAddresses(string s) {
-        vector<int> pos;
-        recurr(0,3,pos,s);
+        
+        recurr(s);
         return ans;
     }
 };
