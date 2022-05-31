@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<string> ans;
     unordered_set<string> st;
-    bool nowCheck(string &ip){
+    bool nowCheck(string ip){
         stringstream ss(ip);
         vector<string> v;
         while (ss.good()) {
@@ -31,7 +31,7 @@ public:
         
         return 1;
     }
-    bool check(vector<int> pos,string &s){
+    bool check(vector<int> pos,string s){
         if(pos.size() != 3) return 0;
         reverse(pos.begin(),pos.end());
         string temp;
@@ -50,7 +50,7 @@ public:
         
         return nowCheck(temp);
     }
-    void recurr(int i,int remNum,vector<int> &pos,string &s){
+    void recurr(int i,int remNum,vector<int> pos,string &s){
         if(remNum == 0){
             //Check;
             check(pos,s);
