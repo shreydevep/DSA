@@ -31,7 +31,7 @@ public:
         
         return 1;
     }
-    bool check(vector<int> pos,string &s){
+    bool check(vector<int> &pos,string &s){
         if(pos.size() != 3) return 0;
         reverse(pos.begin(),pos.end());
         string temp;
