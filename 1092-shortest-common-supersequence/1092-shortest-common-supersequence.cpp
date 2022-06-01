@@ -29,42 +29,27 @@ public:
             }
             else{
                 if(dp[i-1][j] > dp[i][j-1]){
-                   // res += text1[i-1];
+                    res += text1[i-1];
                     --i;
                 }
                 else{
-                    //res += text2[j-1];
+                    res += text2[j-1];
                     --j;
                 }
             }
         }
+    
+       
+         while(i > 0){
+                res += text1[i-1];
+                i--;
+         }
+         while(j > 0){
+                res += text2[j-1];
+                j--;
+         }
         reverse(res.begin(),res.end());
-        i = 0;
-        j = 0;
-       // cout << res <<"\n";
-        string ans;
-        for(auto &x : res){
-            while(i < text1.length() && text1[i] != x){
-                ans += text1[i];
-                i++;
-            }
-            while(j < text2.length() && text2[j] != x){
-                ans += text2[j];
-                j++;
-            }
-            ans += x;
-            i++;
-            j++;
-        }
-         while(i < text1.length()){
-                ans += text1[i];
-                i++;
-         }
-         while(j < text2.length()){
-                ans += text2[j];
-                j++;
-         }
-        return ans;
+        return res;
         
         
         
