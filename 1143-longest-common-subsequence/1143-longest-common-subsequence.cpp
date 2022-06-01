@@ -1,21 +1,20 @@
 class Solution {
 public:
-    int recurr(int i,int j,string &text1,string &text2,vector<vector<int>> &dp){
-        if(i >= text1.length() or j >= text2.length()) return 0;
-        
-        if(dp[i][j] != -1){
-            return dp[i][j];
-        }
-        
-        if(text1[i] == text2[j]){
-            return dp[i][j] = 1 + recurr(i+1,j+1,text1,text2,dp);
-        }else{
-            return dp[i][j] = max(recurr(i+1,j,text1,text2,dp),recurr(i,j+1,text1,text2,dp));
-        }
-    }
     int longestCommonSubsequence(string text1, string text2) {
-        vector<vector<int>> dp(text1.length()+1,vector<int>(text2.length()+1,-1));
         
-        return recurr(0,0,text1,text2,dp);
+        vector<int> prev(text2.length()+1,0);
+        vector<int> curr(text2.length()+1,0);
+        for(int i=1;i<=text1.length();++i){
+            for(int j=1;j<=text2.length();++j){
+                if(text1[i-1] == text2[j-1]){
+                    curr[j] = 1 + prev[j-1];
+                }
+                else{
+                    curr[j] = max(prev[j],curr[j-1]);
+                }
+            }
+            prev = curr;
+        }
+        return prev[text2.length()];
     }
 };
