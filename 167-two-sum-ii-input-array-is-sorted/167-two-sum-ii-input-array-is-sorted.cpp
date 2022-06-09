@@ -3,6 +3,7 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         int i = 0;
         int j = nums.size()-1;
+        vector <int> temp;
         while(i < j){
             if(i > 0 && nums[i-1] == nums[i]){
                 i++;
@@ -13,7 +14,7 @@ public:
                 continue;
             }
             if(nums[i] + nums[j] == target){
-               vector <int> temp = {i+1,j+1};
+               temp = {i+1,j+1};
                 return temp;
             }
             else if(nums[i] + nums[j] < target){
@@ -23,7 +24,7 @@ public:
                 j--;
             }
         }
-        vector<int> temp;
+        
         return temp;
     }
 };
