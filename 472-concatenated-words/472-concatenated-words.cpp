@@ -8,9 +8,7 @@ public:
                 vector<Node*> links{26,{NULL}};
                 bool flag = false;
                 string str = "";
-                Node(){
-                    links.resize(26,{NULL});
-                }
+                
                 bool containsKey(char ch){
                     return (links[ch-'a'] != NULL);
                 }
