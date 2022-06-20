@@ -5,7 +5,7 @@ public:
             
             class Node{
                 public:
-                vector<Node*> links;
+                vector<Node*> links{26,{NULL}};
                 bool flag = false;
                 string str = "";
                 Node(){
