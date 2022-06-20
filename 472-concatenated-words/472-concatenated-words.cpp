@@ -5,10 +5,12 @@ public:
             
             class Node{
                 public:
-                Node* links[26] = {NULL};
+                vector<Node*> links;
                 bool flag = false;
                 string str = "";
-                
+                Node(){
+                    links.resize(26,{NULL});
+                }
                 bool containsKey(char ch){
                     return (links[ch-'a'] != NULL);
                 }
@@ -23,6 +25,7 @@ public:
                 
                 
                 void setEnd(string word){
+                    flag = true;
                     str = word;
                 }
                 
@@ -31,7 +34,7 @@ public:
                 }
             };
             Node* root;
-            vector <string> ans;
+            set <string> ans;
             Trie(){
                 root = new Node();
             }
@@ -51,11 +54,9 @@ public:
                 
             }
             void search(Node* curr,Node* nword){   
-                if(curr->str != "" && nword->str != "" && !curr->flag){
+                if(curr->str != "" && nword->str != ""){
                     //Add to Hash Map
-                    ans.push_back(curr->str);
-                    curr->flag = true;
-                    
+                    ans.insert(curr->str);
                 }
                 
                 if(nword->str != ""){
