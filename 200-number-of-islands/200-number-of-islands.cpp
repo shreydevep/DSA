@@ -18,7 +18,25 @@ public:
             }
         }
     }
-    
+    void bfs(int i,int j,vector<vector<char>> &grid,vector <vector<bool>> &vis){
+        queue<pair<int,int>> q;
+        q.push({i,j});
+        while(!q.empty()){
+            vis[q.front().first][q.front().second] = 1;
+            q.pop();
+            for(int mv=0;mv<4;++mv){
+            
+            if((i+dx[mv]) < 0 || (i + dx[mv]) >= grid.size() || (j + dy[mv]) < 0 || (j + dy[mv]) >= grid[i].size()){
+                continue;
+            }
+            
+            if(grid[i+dx[mv]][j+dy[mv]] == '1' && vis[i+dx[mv]][j+dy[mv]] == 0){
+                //cout << i + dx[mv] <<" " << j + dy[mv] <<"\n";
+                bfs(i+dx[mv],j+dy[mv],grid,vis);
+            }
+        }
+        }
+    }
     int numIslands(vector<vector<char>>& grid) {
         vector<vector<bool>> vis(grid.size(),vector<bool>(grid[0].size(),0));
         int ans = 0;
@@ -26,7 +44,7 @@ public:
             for(int j=0;j<grid[i].size();++j){
                 if(!vis[i][j] && grid[i][j] == '1'){
                     ans++;
-                    dfs(i,j,grid,vis);
+                    bfs(i,j,grid,vis);
                     
                 }
             }
