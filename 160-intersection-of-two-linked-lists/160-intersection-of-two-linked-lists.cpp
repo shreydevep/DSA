@@ -8,34 +8,35 @@
  */
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        int lenA = 0;
-        int lenB = 0;
-        ListNode* f = headA;
-        ListNode* s = headB;
-        while(f != NULL){
-            lenA++;
-            f = f->next;
+    ListNode* detectCycle(ListNode* head) {
+    if (head == NULL || head->next == NULL) return NULL;
+    ListNode* slow = head;
+    ListNode* fast = head;
+    ListNode* start = head;
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            while (slow != start) {
+                slow = slow->next;
+                start = start->next;
+            }
+            return start;
         }
-        while(s != NULL){
-            lenB++;
-            s = s->next;
-        }
-        f = headA;
-        s = headB;
-        if(lenA < lenB){
-            swap(f,s);
-        }
-        int diff = abs(lenA- lenB);
-        while(diff--){
-            f = f->next;
-        }
-        
-        while(f != NULL && s != NULL){
-            if(f == s) return f;
-            f = f->next;
-            s = s->next;
-        }
-        return NULL;
     }
+    return NULL;
+}
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode* A = headB;
+        while(A->next !=NULL){
+            A = A->next;
+        }
+        A->next = headB; //Temp Link
+        
+        auto intersection = detectCycle(headA);
+        
+        A->next = NULL;
+        return intersection;
+    }
+    
 };
