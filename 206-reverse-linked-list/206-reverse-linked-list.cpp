@@ -10,17 +10,28 @@
  */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) {
+    ListNode* iterativeReverse(ListNode* head){
         if(head == NULL) return head;
-        ListNode* node = head->next;
+        
+        ListNode* headNext = head->next;
         ListNode* prev = head;
         prev->next = NULL;
-        while(node != NULL){
-            auto temp = node->next;
-            node->next = prev;
-            prev = node;
-            node = temp;
+        
+        while(headNext != NULL){
+            auto temp = headNext->next;
+            headNext->next = prev;
+            prev = headNext;
+            headNext = temp;
         }
         return prev;
+    }
+    ListNode* recursiveReverse(ListNode* node,ListNode* prev){
+        if(node == NULL) return prev;
+         auto head = recursiveReverse(node->next,node);
+         node->next = prev;
+         return head;
+    }
+    ListNode* reverseList(ListNode* head) {
+        return recursiveReverse(head,NULL);
     }
 };
