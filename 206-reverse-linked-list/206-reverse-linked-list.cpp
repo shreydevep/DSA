@@ -32,6 +32,6 @@ public:
          return head;
     }
     ListNode* reverseList(ListNode* head) {
-        return recursiveReverse(head,NULL);
+        return iterativeReverse(head);
     }
 };
