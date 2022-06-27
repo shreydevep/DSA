@@ -38,7 +38,7 @@ public:
           
           int ans = 0;
           for(int i=0;i<n;++i){
-              cout << dist[i] <<" ";
+              
               if(dist[i] == INF) return -1;
               ans = max(ans,dist[i]);
           }
