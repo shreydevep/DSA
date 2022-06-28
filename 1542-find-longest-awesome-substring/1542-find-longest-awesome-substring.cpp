@@ -4,9 +4,9 @@ public:
         unordered_map<int,int> hash;
         int prev = 0;
         int ans = 0;
-        hash[0] = 0;
-        for(int j=1;j<=s.length();++j){
-            auto w = s[j-1];
+        hash[0] = -1;
+        for(int j=0;j<s.length();++j){
+            auto w = s[j];
             int val = (w - '0');
             prev ^= (1 << val);
             if(hash.find(prev) == hash.end()){
@@ -14,12 +14,10 @@ public:
             }
             
             ans = max((j - hash[prev]),ans);
-            
             for(int i=0;i<10;++i){
-                if(hash.find(prev^(1<<i)) == hash.end()) continue;
-                ans = max(ans,(j-hash[prev^(1<<i)]));
+                if(hash.find(prev^(1 << i)) == hash.end()) continue;
+                ans = max(ans,(j - hash[prev^(1 << i)]));
             }
-            
         }
         return ans;
     }
