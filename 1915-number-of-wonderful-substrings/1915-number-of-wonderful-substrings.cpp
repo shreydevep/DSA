@@ -15,7 +15,7 @@ public:
         long long ans = 0;
         hash[0] = 1;
         
-        for(auto w : word){
+        for(auto &w : word){
             int val = (w - 'a');
             prev ^= (1 << val);
             ans += hash[prev];
