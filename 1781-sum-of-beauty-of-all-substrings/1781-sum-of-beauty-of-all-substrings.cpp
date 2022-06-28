@@ -2,10 +2,10 @@ class Solution {
 public:
     int beautySum(string s) {
         int ans = 0;
+         vector<int> freq(26,0);
         for(int i=0;i<s.length();++i){
-            vector<int> freq(26,0);
-            freq[s[i]-'a']++;
             
+            freq[s[i]-'a']++;
             for(int j=i+1;j<s.length();++j){
                 freq[s[j]-'a']++;
                 int mx = freq[s[i]-'a'];
@@ -17,6 +17,10 @@ public:
                 }
                 ans += (mx-mn);
             }
+             for(int k=0;k<26;++k){
+                    freq[k] = 0;      
+             }
+            
         }
         return ans;
     }
