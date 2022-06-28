@@ -10,7 +10,7 @@ public:
         return (n & 1) + countSetBits(n >> 1);
     }
     long long wonderfulSubstrings(string word) {
-        map<int,int> hash;
+        unordered_map<int,int> hash;
         int prev = 0;
         long long ans = 0;
         hash[0] = 1;
