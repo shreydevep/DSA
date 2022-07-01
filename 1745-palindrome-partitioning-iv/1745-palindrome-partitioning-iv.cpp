@@ -1,8 +1,8 @@
 class Solution {
 public:
-    vector<vector<bool>> recurr(int i,int j,string s){
+        void recurr(int i,int j,vector<vector<bool>> &dp,string &s){
         
-        vector<vector<bool>> dp(s.length(),vector<bool> (s.length(),0));
+         dp.resize(s.length(),vector<bool> (s.length(),0));
         int cnt = 0;
         for(int i=0;i<s.length();++i){
             dp[i][i] = 1;
@@ -20,14 +20,14 @@ public:
             }
             cnt++;
         }
-        return dp;
+       
         
         
     }
     
     bool checkPartitioning(string s) {
         vector<vector<bool>> dp;
-        dp = recurr(0,s.length()-1,s);
+        recurr(0,s.length()-1,dp,s); 
         
         for(int i=0;i<s.length()-2;++i){
             for(int j=i+1;j<s.length()-1;++j){
