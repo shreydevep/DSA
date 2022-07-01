@@ -27,7 +27,6 @@ public:
     }
     bool check(int water_limit,vector<vector<int>> &grid){
         vector<vector<bool>> vis(grid.size(),vector<bool>(grid[0].size(),0));
-        cout <<"\n";
         return bfs(water_limit,grid,vis);
     }
     int swimInWater(vector<vector<int>>& grid) {
