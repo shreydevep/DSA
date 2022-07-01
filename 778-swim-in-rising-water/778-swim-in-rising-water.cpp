@@ -1,48 +1,40 @@
 class Solution {
 public:
-    vector<int> dx = {-1,0,0,1};
-    vector<int> dy = {0,-1,1,0};
-    bool check_bounds(int x,int y,vector<vector<int>> &grid){
-        if((x < 0) || (y < 0) || (x >= grid.size()) || (y >= grid[0].size())){
-            return false;
-        }
+    typedef pair<int,pair<int,int>> PPII;
+    bool check(int x,int y,vector<vector<int>> &grid,vector<vector<bool>> &vis){
+        if(x < 0 || y < 0 || x >= grid.size() || y >= grid[0].size()) return false;
         return true;
     }
-    bool bfs(int limit_water,vector<vector<int>> &grid,vector<vector<bool>> &vis){
-        queue<pair<int,int>> q;
-        q.push({0,0});
+    vector<int> dx = {-1,0,0,1};
+    vector<int> dy = {0,-1,1,0};
+    int bfs(vector<vector<int>> &grid){
+        priority_queue<PPII,vector<PPII>,greater<PPII>> pq;
+        pq.push({0,{0,0}});
+        vector<vector<bool>> vis (grid.size(),vector<bool>(grid[0].size(),0));
+        vector<vector<int>> dist(grid.size(),vector<int>(grid[0].size(),1e5));
         vis[0][0] = 1;
-        if(grid[0][0] > limit_water) q.pop();
-        while(!q.empty()){
-            auto [x,y] = q.front();
-            q.pop();
-            for(int mv=0;mv<4;++mv){
-                if(check_bounds(x+dx[mv],y+dy[mv],grid) && !vis[x+dx[mv]][y+dy[mv]] && grid[x+dx[mv]][y+dy[mv]] <= limit_water){
-                    vis[x+dx[mv]][y+dy[mv]] = 1;
-                    q.push({x+dx[mv],y+dy[mv]});
-                }
-            }
+        dist[0][0] = grid[0][0];
+        while(!pq.empty()){
+            auto [wt,p] = pq.top();
+            auto [x,y] = p;
+            pq.pop();
+           
+           for(int mv = 0;mv < 4; ++mv){
+               if(check(x+dx[mv],y+dy[mv],grid,vis)){
+                   int curr = max(0,grid[x+dx[mv]][y+dy[mv]] - dist[x][y]);
+                   if (curr + dist[x][y]< dist[x+dx[mv]][y+dy[mv]]) {
+                    dist[x+dx[mv]][y+dy[mv]] =  curr + dist[x][y];
+                    //Correct
+                    pq.push({dist[x+dx[mv]][y+dy[mv]], {x+dx[mv],y+dy[mv]}});
+                    }
+               }
+           }
+            
+            
         }
-        return vis[grid.size()-1][grid[0].size()-1];
-    }
-    bool check(int water_limit,vector<vector<int>> &grid){
-        vector<vector<bool>> vis(grid.size(),vector<bool>(grid[0].size(),0));
-        return bfs(water_limit,grid,vis);
+        return dist[grid.size()-1][grid[0].size()-1];
     }
     int swimInWater(vector<vector<int>>& grid) {
-        int l = 0;
-        int r = 5000;
-        int ans = r;
-        while(l < r){
-            int mid = l + (r-l)/2;
-            if(check(mid,grid)){
-                ans = mid;
-                r = mid;
-            }
-            else{
-                l = mid + 1;
-            }
-        }
-        return ans;
+        return bfs(grid);
     }
 };
