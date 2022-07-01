@@ -1,25 +1,20 @@
 class Solution {
 public:
-    bool check(vector<int>& bloomDay,int day,int k,int m){
-        int cnt_k = 0;
-        int temp_k = 0;
-        for(int i=0;i<bloomDay.size();++i){
-            if(temp_k > 0 && temp_k % k == 0){
-                cnt_k++;
-                temp_k = 0;
+    bool check(vector<int>& bloomDay,int mid,int k,int m){
+        int n = bloomDay.size();
+        int tot = 0;
+        for(int i=0;i<n;){
+            while(i < n && bloomDay[i]>mid)i++;
+            int j=i;
+            int cnt=0;
+            while(j<n&&cnt<k&&bloomDay[j]<=mid){
+                j++;
+                cnt++;
             }
-            if(bloomDay[i] <= day){
-                temp_k++;
-            }
-            else{
-                temp_k = 0;
-            }
+            if(cnt==k)tot++;
+            i=j;
         }
-         if(temp_k > 0 && temp_k % k == 0){
-                cnt_k++;
-                temp_k = 0;
-         }
-        return (cnt_k >= m);
+        return (tot >= m);
     }
     int minDays(vector<int>& bloomDay, int m, int k) {
         if(bloomDay.size() < ((long long)m*(long long)k)) return -1;
