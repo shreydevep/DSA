@@ -1,31 +1,32 @@
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
-        
-        stack <int> left;
-        vector <int> cleft((int)heights.size(),0);
-        vector <int> cright((int)heights.size(),0);
-        stack <int> right;
-        cleft[0] = 0;
-        for(int i=0;i<heights.size();++i){
-            while(left.size() != 0 && heights[left.top()] >= heights[i]){
-                cleft[i] += (cleft[left.top()] + 1);
-                left.pop();
+        stack<int> cleft;
+        cleft.push(0);
+        vector<int> left(heights.size()+1);
+        for(int i=1;i<=heights.size();++i){
+           
+            while(cleft.size() > 1 && heights[cleft.top()-1] >= heights[i-1]){
+                cleft.pop();
             }
-            left.push(i);
+            left[i] = (i-cleft.top());
+            cleft.push(i);
         }
-        cright[heights.size()-1] = 0;
-         for(int i=heights.size()-1;i>= 0;--i){
-            while(right.size() != 0 && heights[right.top()] > heights[i]){
-                cright[i] += (cright[right.top()] + 1);
-                right.pop();
+        stack<int> cright;
+        cright.push(heights.size()+1);
+        vector<int> right(heights.size()+1);
+        for(int i=heights.size();i>=1;--i){
+            while(cright.size() > 1 && heights[cright.top()-1] >= heights[i-1]){
+                cright.pop();
             }
-            right.push(i);
+            right[i] = (cright.top()-i);
+            cright.push(i);
         }
         int ans = 0;
-        for(int i=0;i<heights.size();++i){
-            ans = max((cleft[i] + cright[i] + 1)*heights[i],ans);
+        for(int i=1;i<=heights.size();++i){
+            ans = max(ans,(right[i]+left[i]-1)*heights[i-1]);
         }
         return ans;
+        
     }
 };
