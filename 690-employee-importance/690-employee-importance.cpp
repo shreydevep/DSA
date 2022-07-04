@@ -11,11 +11,11 @@ public:
 class Solution {
 public:
     unordered_map<int,Employee*> mp;
-    int dfs(int id,vector<bool> &vis){
+    int dfs(int id,unordered_set<int> &vis){
         int sum = 0;
         for(auto em : mp[id]->subordinates){
-            if(!vis[em]){
-                vis[em] = 1;
+            if(vis.find(em) == vis.end()){
+                vis.insert(em);
                 sum += (dfs(em,vis));
             }
         }
@@ -25,7 +25,7 @@ public:
         for(auto x : employees){
             mp[x->id] = x;
         }
-        vector<bool> vis(2002,0);
+        unordered_set<int> vis;
         return dfs(id,vis);
         
     }
