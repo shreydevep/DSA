@@ -15,7 +15,7 @@ public:
         }
         int timer = 0;
         
-        while(cnt > 0 && timer < 1e5){
+        while(cnt > 0 && timer < 1e6){
             if(reschedule.find(timer) != reschedule.end()){
                
                 pq.push(reschedule[timer]);
