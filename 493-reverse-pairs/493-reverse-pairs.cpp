@@ -18,28 +18,30 @@ class Solution {
 		cout << "\n";
 	}
 	void merge(int left, int mid, int right) {
-		int i = left;
-        int j = mid+1;
+        int i = left;
+        int j= mid+1;
+        int tempptr = mid+1;
         int k = left;
-        int r = mid+1;
-        int counter = 0;
-        
-		while(i<=mid) {
+        int cnt = 0;
+		while(i <= mid){
+            while(tempptr <= right && (arr[i] > (long)2*arr[tempptr])){
+                cnt++;
+                tempptr++;
+            }
+            ans += cnt;
             
-            while(r<=right && (arr[i] > (long)2*arr[r])) counter++, r++;
-            ans+= counter;
-            while( j<=right && arr[j]<=arr[i] ) {
+            while(j<=right && arr[j] <= arr[i]){
                 temp[k++] = arr[j++];
             }
             temp[k++] = arr[i++];
+           
         }
-        while(j<=right) {
-            temp[k++] = arr[j++];
+        while(j<=right){
+                temp[k++] = arr[j++];
         }
-		for(i=left;i<=right;++i){
-			arr[i] = temp[i];
-		}
-       
+        for(int i=left;i<=right;++i){
+            arr[i] = temp[i];
+        }
 	}
 	void merge_sort(int i, int j) {
 		if (i < j) {
