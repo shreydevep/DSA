@@ -50,7 +50,16 @@ public:
     }
     
     int minCut(string s) {
-        vector<vector<int>> dp(s.length(),vector<int>(s.length(),-1));
-        return mcm(dp,s,0,s.length()-1);   
+      vector<int> dp(s.length()+1,0);
+      dp[s.length()] = 0;
+      for(int i=s.length()-1;i>=0;i--){
+          int cost = INT_MAX;
+          for(int j=i;j<s.length();++j){
+              if(isPalindrome(s,i,j))
+                cost = min(cost,dp[j+1]+1);
+          }
+          dp[i] = cost;
+      }
+        return dp[0]-1;
     }
 };
