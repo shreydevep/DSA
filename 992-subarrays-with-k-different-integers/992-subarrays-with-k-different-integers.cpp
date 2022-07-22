@@ -2,7 +2,7 @@ class Solution {
 public:
     int subarraysWithAtmostK(vector<int>& nums,int k){
         if(k <= 0) return 0;
-        map<int,int> freq;
+        unordered_map<int,int> freq;
         int count = 0;
         int i = 0;
         int ans = 0;
