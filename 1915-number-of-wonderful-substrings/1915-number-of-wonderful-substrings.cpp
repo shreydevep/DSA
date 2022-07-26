@@ -1,26 +1,20 @@
 class Solution {
 public:
-    
     long long wonderfulSubstrings(string word) {
-        vector<int> hash(1024,0);
-        int prev = 0;
+       unordered_map<int,int> hash_map;
         long long ans = 0;
-        hash[0] = 1;
-        
-        for(auto &w : word){
-            int val = (w - 'a');
-            prev ^= (1 << val);
-            ans += hash[prev];
-            for(int i=0;i<10;++i){
-                ans += (hash[prev^(1 << i)]);
-            }
+        int hash  = 0;
+        for(int i=0;i<word.length();++i){
+            hash_map[hash]++;
+            hash ^= (1 << (word[i]-'a'));
+            ans += (hash_map[hash]);
             
-            hash[prev]++;
+            for(char j='a';j<='j';++j){
+                ans += hash_map[hash^(1<<(j-'a'))];
+            }
             
         }
         return ans;
+        
     }
 };
-
-    
-    
