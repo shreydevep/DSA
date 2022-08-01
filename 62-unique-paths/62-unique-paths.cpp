@@ -1,26 +1,16 @@
+
 class Solution {
 public:
-    vector <int> dx = {1,0};
-    vector <int> dy = {0,1};
-    int dp[101][101];
-    int ways(int i,int j,int m,int n){
-        //cout << dp[i][j] <<" "<<i <<" "<< j <<"\n";
+    int recurr(int i,int j,int &m,int &n,vector<vector<int>> &dp){
+        if(i >= m or j >= n) return 0;
         if(i == m-1 && j == n-1) return 1;
         if(dp[i][j] != -1) return dp[i][j];
-        int temp = 0;
-        for(int mv=0;mv<2;++mv){
-            if(i+dx[mv] < 0 || i+dx[mv] >= m || j+dy[mv] < 0 || j+dy[mv] >= n)
-                continue;
-            temp += ((ways(i+dx[mv],j+dy[mv],m,n)));
-        }
-        return dp[i][j] = temp;
+        int right =  recurr(i,j+1,m,n,dp);
+        int down =   recurr(i+1,j,m,n,dp);
+        return dp[i][j] = (right + down);
     }
     int uniquePaths(int m, int n) {
-        for(int i=0;i<m;++i){
-            for(int j=0;j<n;++j){
-                dp[i][j] = -1;
-            }
-        }
-        return ways(0,0,m,n);
+        vector<vector<int>> dp(m,vector<int>(n,-1));
+        return recurr(0,0,m,n,dp);
     }
 };
