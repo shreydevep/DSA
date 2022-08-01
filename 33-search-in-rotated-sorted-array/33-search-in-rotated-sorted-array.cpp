@@ -1,11 +1,12 @@
 class Solution {
 public:
-    int search(vector<int>& nums, int target) {
+    int pivot(vector<int> &nums){
         int l = 0;
-        int r = nums.size() - 1;
-        int mid = l + (r-l)/2;        
+        int r = nums.size()-1;
+        
         while(l < r){
-            mid = l + (r-l)/2;
+            int mid = (l + r)/2;
+            
             if(nums[mid] >= nums[r]){
                 l = mid + 1;
             }
@@ -13,21 +14,28 @@ public:
                 r = mid;
             }
         }
-        int pivot = max(0,r-1);
-        int itr1 = -1;
-        int itr2 = -1;
-        if(binary_search(nums.begin(),nums.begin()+pivot+1,target)){
-             itr1 = lower_bound(nums.begin(),nums.begin()+pivot+1,target) - nums.begin();
+        return r;
+    }
+    int binary_search(int l,int r,vector<int> &nums,int target){
+        while(l<=r){
+            int mid = (l+r)/2;
+            
+            if(nums[mid] == target) return mid;
+            else if(nums[mid] > target){
+                r = mid - 1;
+            }
+            else{
+                l = mid + 1;
+            }
         }
-        if(binary_search(nums.begin()+pivot+1,nums.end(),target)){
-             itr2 = lower_bound(nums.begin()+pivot+1,nums.end(),target) - nums.begin();
-        }
-       
-       
-        
-        if(itr1 != -1){
-            return itr1;
-        }
+        return -1;
+    }
+    int search(vector<int>& nums, int target) {
+        int pvt = pivot(nums);
+        int itr1 = binary_search(0,max(0,pvt-1),nums,target);
+        int itr2 = binary_search(min(pvt,(int)nums.size()-1),nums.size()-1,nums,target);
+        if(itr1 != -1) return itr1;
         return itr2;
+        
     }
 };
