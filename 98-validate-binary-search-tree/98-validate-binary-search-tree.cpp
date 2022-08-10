@@ -12,20 +12,20 @@
 class Solution {
 public:
     TreeNode* prev = NULL;
-    bool check(TreeNode* root){
-        if(!root) return true;
+    bool recurr(TreeNode* node){
+        if(!node) return true;
         
-        if(!check(root->left)) return false;
+        if(!recurr(node->left)) return false;
         
-        if(prev != NULL && prev->val >= root->val) return false;
-        prev = root;
-        if(!check(root->right)) return false;
+        if(prev != NULL && prev->val >= node->val) return false;
+        prev = node;
+        
+        if(!recurr(node->right)) return false;
         
         return true;
-    }
-    
-    bool isValidBST(TreeNode* root) {
         
-        return check(root);    
+    }
+    bool isValidBST(TreeNode* root) {
+        return recurr(root);
     }
 };
