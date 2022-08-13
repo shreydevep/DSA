@@ -1,51 +1,64 @@
 class Solution {
 public:
-    bool isBoundary(int x,int y,vector<vector<char>>&board){
-        if((x == 0) or (y == 0) or x == (board.size()-1)  or (y == (board[0].size()-1))) return true;
-        return false;
-    }
-    bool check(int x,int y,vector<vector<char>> &board){
-        if(x < 0 or y < 0 or x >= board.size() or y >= board[0].size()){
-            return false;
+    bool check(int i,int j,vector<vector<char>> &board){
+        if(i < 0 or j < 0 or i >= board.size() or j >= board[0].size()){
+            return 0;
         }
-        return true;
+        return 1;
     }
-    vector<int> dx = {0,-1,1,0};
-    vector<int> dy = {-1,0,0,1};
+    vector<int> dx = {-1,0,0,1};
+    vector<int> dy = {0,-1,1,0};
     
-    void dfs(pair<int,int> node,vector<vector<bool>> &vis,vector<vector<char>> &board,bool &isEnclosed,vector<pair<int,int>> &comp){
-        auto [x,y] = node;
-        vis[x][y] = 1;
-        comp.push_back(node);
-        if(isBoundary(x,y,board) && board[x][y] == 'O') isEnclosed = 1;
-        for(int mv=0;mv<4;++mv){
-            if(check(x+dx[mv],y+dy[mv],board) && !vis[x+dx[mv]][y+dy[mv]] && board[x+dx[mv]][y+dy[mv]] == 'O'){
-                dfs({x+dx[mv],y+dy[mv]},vis,board,isEnclosed,comp);
+    void bfs(int i,int j,vector<vector<char>> &board,vector<vector<bool>> &vis){
+        
+        for(int delta = 0;delta<4;++delta){
+            int new_i = i+dx[delta];
+            int new_j = j+dy[delta];
+            if(check(new_i,new_j,board) && board[new_i][new_j] == 'O' && !vis[new_i][new_j]){
+                vis[new_i][new_j] = 1;
+                board[new_i][new_j] = '.';
+                bfs(new_i,new_j,board,vis);
             }
         }
     }
-    
-    
     void solve(vector<vector<char>>& board) {
         vector<vector<bool>> vis(board.size(),vector<bool>(board[0].size(),0));
-        
         for(int i=0;i<board.size();++i){
-            for(int j=0;j<board[0].size();++j){
-                if(!vis[i][j] && board[i][j] == 'O'){
-                    bool isEnclosed = 0;
-                    vector<pair<int,int>> comp;
-                    
-                    dfs({i,j},vis,board,isEnclosed,comp);
-                    
-                    if(!isEnclosed){
-                        for(auto [x,y] : comp){
-                            board[x][y] = 'X';
-                        }
-                    }
-                    isEnclosed = 0;
-                    
-                }
+            if(board[i][0] == 'O'){
+                vis[i][0] = 1;
+                board[i][0] = '.';
+                bfs(i,0,board,vis);
+            }
+            
+            if(board[i][board[0].size()-1] == 'O'){
+                vis[i][board[0].size()-1] = 1;
+                board[i][board[0].size()-1] = '.';
+                bfs(i,board[0].size()-1,board,vis);
             }
         }
+        for(int j=0;j<board[0].size();++j){
+            
+            if(board[0][j] == 'O'){
+                vis[0][j] = 1;
+                board[0][j] = '.';
+                bfs(0,j,board,vis);
+            }
+            if(board[board.size()-1][j] == 'O'){
+               
+                vis[board.size()-1][j] = 1;
+                board[board.size()-1][j] = '.';
+                bfs(board.size()-1,j,board,vis);
+            }
+        }
+        for(int i=0;i<board.size();++i){
+            for(int j=0;j<board[0].size();++j){
+                if(board[i][j] != '.') board[i][j] = 'X';
+                else board[i][j] = 'O';
+            }
+            
+        }
+        
+        
+        
     }
 };
