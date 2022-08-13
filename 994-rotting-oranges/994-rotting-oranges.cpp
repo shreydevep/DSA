@@ -8,7 +8,7 @@ public:
     }
     vector<int> dx = {-1,0,0,1};
     vector<int> dy = {0,-1,1,0};
-    void bfs(pair<int,int> node,vector<vector<int>> &grid){
+    void multisource_bfs(pair<int,int> node,vector<vector<int>> &grid){
         queue<pair<int,int>> q;
         q.push(node);
         while(!q.empty()){
@@ -33,7 +33,7 @@ public:
             for(int j=0;j<grid[0].size();++j){
                 if(grid[i][j] == 2){
                     dist[i][j] = 0;
-                    bfs({i,j},grid);
+                    multisource_bfs({i,j},grid);
                 }
             }
         }
