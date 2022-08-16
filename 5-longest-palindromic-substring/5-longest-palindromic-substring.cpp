@@ -3,8 +3,8 @@ public:
    string expandAroundCenter(string &s){
         int ans = 1;
         pair<int,int> res = {0,0};
-        for(int i=0;i<s.length();++i){
-            cout << ans <<"\n";
+        for(int i=1;i<s.length();++i){
+           
             if(i > 0){
                 //Even
                 int left = i-2;
