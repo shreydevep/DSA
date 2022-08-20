@@ -1,39 +1,42 @@
 class Solution {
 public:
     int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
-       
-        int curr_fuel = startFuel;
-        
-        priority_queue<int> pq;
-        int curr_pos = 0;
+        if(stations.size() == 0 and startFuel < target) return -1;
+        priority_queue<pair<int,int>> pq;
+        int fuel = startFuel;
+        int prev = 0;
         int ans = 0;
-        for(int i=0;i<stations.size();++i){
-            curr_fuel -= (stations[i][0]-curr_pos);
-            curr_pos = stations[i][0];
-            
-            while(!pq.empty() && curr_fuel < 0){
-                curr_fuel += pq.top();
-                
-                pq.pop();
-                ans++;
-            }
-            
-            if(curr_fuel < 0) return -1;
-            pq.push(stations[i][1]);
-            
-            
+        if(stations.size() > 0 and stations.back()[0] != target){
+           vector<int> temp = {target,0};
+            stations.push_back(temp);
         }
         
-        curr_fuel -= (target - curr_pos);
-        while(!pq.empty() && curr_fuel < 0){
-                curr_fuel += pq.top();
+        
+        
+        for(auto &d : stations){
+            int dist = d[0] - prev;
+            
+            if(dist > fuel){
+                while(!pq.empty() and fuel < dist){
+                    auto temp = pq.top();
+                    ans++;
+                    fuel += temp.first;
+                    pq.pop();
+                }
                 
-                pq.pop();
-                ans++;
+                
+                if(pq.empty() and fuel < dist) {
+                    ans = -1;
+                    break;
+                }
+            }
+            fuel -= dist;
+            prev = d[0];
+            pq.push({d[1],d[0]});
         }
-        if(curr_fuel < 0) return -1;
+        
         
         return ans;
-        
     }
 };
+
