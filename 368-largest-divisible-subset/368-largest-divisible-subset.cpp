@@ -1,37 +1,34 @@
 class Solution {
 public:
-   
     vector<int> largestDivisibleSubset(vector<int>& nums) {
+        int n=nums.size();
         sort(nums.begin(),nums.end());
+        vector<int> dp(n,1);
+        vector<int> par(n,-1);
         
-        vector<int> t(nums.size()+1,1);
-        vector<int> hash(nums.size()+1,0);
-        for(int i=0;i<nums.size();++i) hash[i] = i;
-        
-        for(int i=0;i<nums.size();++i){
-            for(int j=0;j<i;++j){
-                if(nums[i] % nums[j] == 0){
-                    if(1 + t[j] > t[i]){
-                        hash[i] = j;
-                        t[i] = 1 + t[j];
+        int ma=0,ind=0;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                if(nums[j]%nums[i]==0){
+                    if(dp[j]<=1+dp[i]){
+                        dp[j]=1+dp[i];
+                            par[j]=i;
+                        
+                        if(dp[j]>=ma){
+                            ma=dp[j];
+                            ind=j;
+                        }
                     }
+                    
                 }
             }
         }
-        
-        int mx_ind = 0;
-        for(int i=0;i<nums.size();++i){
-            if(t[mx_ind] < t[i]){
-                mx_ind = i;
-            }
-        }
         vector<int> ans;
-        while(hash[mx_ind] != mx_ind){
-            ans.push_back(nums[mx_ind]);
-            mx_ind = hash[mx_ind];
+        // cout<<ind;
+        while(ind!=-1){
+            ans.push_back(nums[ind]);
+            ind=par[ind];
         }
-        ans.push_back(nums[mx_ind]);
-        
         return ans;
     }
 };
